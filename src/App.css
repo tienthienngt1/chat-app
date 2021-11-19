@@ -1,3 +1,8 @@
-body{
-    padding: 10px;
+body, *{
+    cursor: url("./assets/unavailable.cur"), auto !important;
 }
+svg {
+    color: black;
+    overflow: scroll;
+}
+

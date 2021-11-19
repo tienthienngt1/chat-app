@@ -1,5 +1,7 @@
-// import { combineReducers } from "redux";
+import { combineReducers } from "redux";
+import userReducer from "./user";
+import settingSlice from "./setting"
 
-// const rootReducer = combineReducers()
+const rootReducer = combineReducers({userReducer, settingSlice})
 
-// export default rootReducer
+export default rootReducer
