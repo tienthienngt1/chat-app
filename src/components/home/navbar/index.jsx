@@ -1,16 +1,23 @@
 import {useState} from "react"
-import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import ChatRoom from "./ChatRoom";
 import HeaderNavbar from "./HeaderNavbar";
 import Setting from "./Setting";
 
-const Wrap = styled.div``;
+const selectIsDisplaySetting = createSelector(
+    state => state.settingSlice,
+    settingSlice => settingSlice.isDisplaySetting,
+)
 
 const Navbar = () => {
-    const state = useSelector(state => state.settingSlice.isDisplaySetting)
+
+    
+    
+    const state = useSelector(selectIsDisplaySetting)
+    console.log("setting_slice:" + state);
 	return (
-		<Wrap>
+		<>
 			{state ? (
 				<Setting />
 			) : (
@@ -19,7 +26,7 @@ const Navbar = () => {
 					<ChatRoom />
 				</>
 			)}
-		</Wrap>
+		</>
 	);
 };
 

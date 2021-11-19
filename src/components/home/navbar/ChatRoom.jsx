@@ -1,6 +1,8 @@
 import { Avatar, Space, Typography, Button, Tooltip } from "antd";
 import styled from "styled-components";
 import { PlusOutlined } from "@ant-design/icons";
+import {useSelector, useDispatch} from "react-redux"
+import {changeTrueToTrue, changeFalseToTrue} from "../../../redux/reducer/test"
 
 const Wrap = styled.div`
 	padding: 10px;
@@ -27,6 +29,14 @@ const Container = styled.div`
 `;
 
 const ChatRoom = () => {
+    const dispatch = useDispatch()
+    const handleAdd = () => {
+        console.log("button add");
+        dispatch(changeFalseToTrue())
+    }
+    const test  = useSelector(state => state.test)
+    const setting = useSelector(state => state.settingSlice)
+    console.log('chatroom', test);
 	return (
 		<Container>
 			<Wrap>
@@ -43,7 +53,7 @@ const ChatRoom = () => {
 				</Space>
 			</Wrap>
 			<Tooltip title="Create Chat Room">
-				<Button shape="circle" size="large" type="primary">
+				<Button shape="circle" size="large" type="primary" onClick={handleAdd} >
 					<PlusOutlined />
 				</Button>
 			</Tooltip>

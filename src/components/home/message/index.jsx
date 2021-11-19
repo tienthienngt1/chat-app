@@ -1,15 +1,24 @@
+import {useSelector} from "react-redux"
 import {Row, Affix, Alert, Col } from "antd";
 import React from "react";
 import styled from "styled-components";
 import BodyMessage from "./BodyMessage";
 import HeaderMessage from "./HeaderMessage";
+import { createSelector, createSelectorCreator } from "reselect";
 
 const Wrap = styled(Row)`
 	flex-direction: column;
 	width: 100%;
 `;
 
+const selectTest = createSelector(
+    state => state.test,
+    test => test
+)
+
 const Message = () => {
+    const state = useSelector(state => state.test)
+    console.log("message");
 	return (
 		<Wrap justify="center">
 			<Alert message="You haven't selected any chat yet." showIcon type="info" closable/>

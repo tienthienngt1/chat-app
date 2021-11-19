@@ -9,8 +9,6 @@ import {store, persistor} from "./redux/store";
 
 const Container = () => {
 	const history = useHistory();
-    const state = useSelector(state => state)
-    console.log(state.userReducer);
 	const loginState = useSelector((state) => state.userReducer.isLogin);
 	useEffect(() => {
 		if (loginState) history.push("/home");

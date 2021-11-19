@@ -13,6 +13,7 @@ const WrapMessage = styled(Col)`
 `;
 
 const Message = () => {
+    
 	return (
 		<>
 			<Row align="bottom">

@@ -41,6 +41,8 @@ const MenuDrop = (props) => {
         console.log("ok");
         dispatch(set_true())
 	};
+    const  state = useSelector(state => state.settingSlice)
+    console.log({state});
 	return (
 		<Menu style={{ borderRadius: "10px" }}>
 			<Menu.Item key="0"  onClick={handleSetting} style={{borderRadius: "10px"}}>
