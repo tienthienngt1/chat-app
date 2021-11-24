@@ -1,7 +1,11 @@
-import React from "react";
+import {useEffect} from "react"
 import { Typography, Col, Tooltip, Input, Row, Avatar } from "antd";
 import { SendOutlined, SmileOutlined } from "@ant-design/icons";
+import {useSelector} from "react-redux"
 import styled from "styled-components";
+import { updateMessage } from "../../../api/update";
+import {onSnapshot, doc} from "firebase/firestore"
+import {db} from "../../../firebase/config"
 
 const WrapMessage = styled(Col)`
 	background: ${(props) => props.background};
@@ -12,8 +16,14 @@ const WrapMessage = styled(Col)`
 		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 `;
 
-const Message = () => {
-    
+const Message = props => {
+    console.log("message: ", props);
+    useEffect(() => {
+        const subcribe = onSnapshot(doc(db, "rooms", props.id), doc => {
+            console.warn(doc.data());
+        })
+        return subcribe
+    }, [props])
 	return (
 		<>
 			<Row align="bottom">
@@ -82,11 +92,11 @@ const WrapMessageContent = styled(Row)`
 	height: 100%;
 `;
 
-const MessageContent = () => {
+const MessageContent = props => {
 	return (
 		<WrapMessageContent align="bottom">
 			<Col span={24}>
-				<Message />
+				<Message {...props} />
 			</Col>
 		</WrapMessageContent>
 	);
@@ -105,7 +115,12 @@ const WrapInput = styled.div`
 	}
 `;
 
-const InputAndSend = () => {
+const InputAndSend = props => {
+    const user = useSelector(state => state.userReducer)
+    const handleSendMessage =async e => {
+        const sendReq = await updateMessage(e.target.value, {...props,user: user.user})
+        console.log(sendReq);
+    }
 	return (
 		<>
 			<Row align="middle">
@@ -116,7 +131,7 @@ const InputAndSend = () => {
 								<SmileOutlined style={{ fontSize: "30px" }} />
 							</Col>
 							<Col span={22} lg={23}>
-								<Input placeholder="Message" bordered={false} />
+								<Input placeholder="Message" bordered={false} onPressEnter = {handleSendMessage}/>
 							</Col>
 						</Row>
 					</WrapInput>
@@ -124,6 +139,7 @@ const InputAndSend = () => {
 				<Col span={5} sm={3} lg={2}>
 					<Tooltip title="Send Message">
 						<SendOutlined
+                            onClick={handleSendMessage}
 							style={{ fontSize: "20px", marginLeft: "15px" }}
 						/>
 					</Tooltip>
@@ -151,15 +167,16 @@ const WrapRow = styled(Row)`
 	}
 `;
 
-const BodyMessage = () => {
+const BodyMessage = props => {
+    console.log(props);
 	return (
 		<Row justify="center">
 			<WrapRow align="center">
 				<Col span={24}>
-					<MessageContent />
+					<MessageContent {...props} />
 				</Col>
 				<Col span={24}>
-					<InputAndSend />
+					<InputAndSend {...props}/>
 				</Col>
 			</WrapRow>
 		</Row>

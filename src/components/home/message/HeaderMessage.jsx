@@ -1,4 +1,6 @@
 import { Row, Affix, Avatar, Col, Space, Typography, Tooltip } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { leaveCurrentRoom } from "../../../redux/reducer/currentRoom";
 import { ExportOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 
@@ -10,40 +12,47 @@ const WrapTitleAvatar = styled.div`
 	}
 `;
 
-const TitleAvatar = () => {
+const TitleAvatar = (props) => {
+	console.log(props);
 	return (
 		<WrapTitleAvatar>
 			<Space direction="horizontal">
-				<Avatar src="" size="large">
-					a
+				<Avatar src={props.photo} size="large">
+					{props?.room_name?.charAt(0)?.toUpperCase()}
 				</Avatar>
 				<Typography>
-					<Typography.Title level={4}>NFT Reward</Typography.Title>
-					<Typography.Text>10000 member</Typography.Text>
+					<Typography.Title level={4}>
+						{props?.room_name?.toUpperCase()}
+					</Typography.Title>
+					<Typography.Text>
+						{props?.members?.length} member
+					</Typography.Text>
 				</Typography>
 			</Space>
 		</WrapTitleAvatar>
 	);
 };
 
-const HeaderMessage = () => {
+const HeaderMessage = (props) => {
+	const dispatch = useDispatch();
+	const { photo, room_name, description, infoMembers } = props.rooms.payload;
 	return (
 		<Affix style={{ background: "aliceblue" }}>
 			<Row justify="space-between" align="middle">
 				<Col>
-					<TitleAvatar />
+					<TitleAvatar {...props.rooms.payload} />
 				</Col>
 				<Col>
 					<Avatar.Group maxCount={1}>
-						<Avatar src="">
-							af
-						</Avatar>
-						<Avatar src="">
-							af
-						</Avatar>
+						{infoMembers?.map((info,id) => (
+							<Avatar key={id}  src={info.photoURL}>
+								{info?.displayName?.charAt(0)?.toUpperCase()}
+							</Avatar>
+						))}
 					</Avatar.Group>
 					<Tooltip title="Leave Chat">
 						<ExportOutlined
+							onClick={() => dispatch(leaveCurrentRoom())}
 							style={{
 								fontSize: "30px",
 								margin: "0px 20px",

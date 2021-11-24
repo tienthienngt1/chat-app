@@ -1,19 +1,16 @@
-const stateInit = {
+import {createSlice} from "@reduxjs/toolkit"
+
+const initialState = {
     user: [],
     isLogin: false,
 }
 
-const userReducer = (state = stateInit, action ) => {
-    switch(action.type) {
-        case "ADD_NEW_USER": {
-            return;
-        }
-        case "IS_LOGIN" : {
-            return {...state, isLogin: true};
-        }
-
-        default: return state
+const userReducer = createSlice({
+    name: "userReducer",
+    initialState,
+    reducers: {
+        "user": (state, payload) => ({...state, user: payload.payload, isLogin: true})
     }
-}
-
-export default userReducer;
+})
+export const {user} = userReducer.actions
+export default userReducer.reducer;

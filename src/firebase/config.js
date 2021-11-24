@@ -24,9 +24,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
  connectAuthEmulator(auth, "http://localhost:9099");
- connectFirestoreEmulator(db, "http://localhost", "8080")
- if(window.location.hostname === "localhost"){
-    }
+ connectFirestoreEmulator(db, "localhost", "8080")
  getAnalytics(app)
  
 export {auth, db}

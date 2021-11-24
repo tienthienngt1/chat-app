@@ -1,32 +1,29 @@
-import {useState} from "react"
-import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
+import { useState } from "react";
 import ChatRoom from "./ChatRoom";
 import HeaderNavbar from "./HeaderNavbar";
 import Setting from "./Setting";
-
-const selectIsDisplaySetting = createSelector(
-    state => state.settingSlice,
-    settingSlice => settingSlice.isDisplaySetting,
-)
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
-
-    
-    
-    const state = useSelector(selectIsDisplaySetting)
-    console.log("setting_slice:" + state);
+	const [state, setState] = useState(false);
 	return (
-		<>
+		<AnimatePresence exitBeforeEnter>
 			{state ? (
-				<Setting />
+				<motion.div
+					initial={{ x: -100 }}
+					animate={{ x: 0 }}
+					key="modal"
+					exit={{ x: "-100vw" }}
+				>
+					<Setting setState={setState} />
+				</motion.div>
 			) : (
-				<>
-					<HeaderNavbar />
-					<ChatRoom />
-				</>
+				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+						<HeaderNavbar setState={setState} />
+						<ChatRoom />
+				</motion.div>
 			)}
-		</>
+		</AnimatePresence>
 	);
 };
 

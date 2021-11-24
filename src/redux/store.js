@@ -12,7 +12,7 @@ const persistConfig = {
 	whitelist: ["userReducer"],
 };
 
-const pReducer = persistReducer(persistConfig, rootReducer);
+const pReducer = persistReducer( persistConfig, rootReducer);
 
 const store = configureStore({
     reducer: pReducer,

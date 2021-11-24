@@ -8,8 +8,8 @@ import {
 } from "firebase/auth";
 import { auth} from "../../firebase/config";
 import { useDispatch } from "react-redux";
-import { isLogin } from "../../redux/action/login";
 import { useHistory } from "react-router-dom";
+import { user } from "../../redux/reducer/user"
 
 const Wrap = styled.div`
 	padding: 10px;
@@ -22,8 +22,9 @@ const LoginButton = () => {
 		const fbProvider = new FacebookAuthProvider();
 		signInWithPopup(auth, fbProvider)
 			.then((res) => {
-				const action = isLogin();
-                dispatch(action);
+                console.log(res);
+                const {displayName, email, phoneNumber, photoURL, uid} = res.user
+                dispatch(user({displayName, email, phoneNumber, photoURL, uid, id: res.id}));
                 return history.push("/home")
 			})
 			.catch((err) => console.log(err));

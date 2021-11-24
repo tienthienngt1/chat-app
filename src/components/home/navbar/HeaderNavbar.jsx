@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { set_false, set_true } from "../../../redux/reducer/setting";
 import styled from "styled-components";
 import {
 	Space,
@@ -35,14 +33,10 @@ const Wrap = styled.div`
 	}
 `;
 
-const MenuDrop = (props) => {
-    const dispatch = useDispatch()
+const MenuDrop = props=> {
 	const handleSetting = () => {
-        console.log("ok");
-        dispatch(set_true())
+        props.setState(true)
 	};
-    const  state = useSelector(state => state.settingSlice)
-    console.log({state});
 	return (
 		<Menu style={{ borderRadius: "10px" }}>
 			<Menu.Item key="0"  onClick={handleSetting} style={{borderRadius: "10px"}}>
@@ -62,12 +56,12 @@ const MenuDrop = (props) => {
 	);
 };
 
-const CusDropDown = () => {
+const CusDropDown = props => {
 	const [isDisplay, setIsDisplay] = useState(false);
 	return (
 		<>
 			<Dropdown
-				overlay={<MenuDrop />}
+				overlay={<MenuDrop {...props} />}
 				placement="bottomRight"
 				visible={isDisplay}
 			>
@@ -80,7 +74,8 @@ const CusDropDown = () => {
 						/>
 					) : (
 						<Icon
-							style={{ color: "red", fontSize: "30px" }}
+                            type="black"
+							style={{ fontSize: "30px" }}
 							component={MenuOutlined}
 							onClick={() => setIsDisplay(true)}
 						/>
@@ -91,12 +86,12 @@ const CusDropDown = () => {
 	);
 };
 
-const HeaderNavbar = () => {
+const HeaderNavbar = props => {
 	return (
 		<Wrap>
 			<Row justify="center" align="center">
 				<Col span={4} xl={4}>
-					<CusDropDown />
+					<CusDropDown {...props} />
 				</Col>
 				<Col span={20} xl={20}>
 					<Input
