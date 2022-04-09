@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Landing = () => {
-	const state = useSelector((state) => state.userReducer.isLogin);
+    const state = useSelector((state) => state.userReducer.isLogin);
 	const history = useHistory();
 	alert(state)
 	if (state) return <>{history.push("/home")} </>;

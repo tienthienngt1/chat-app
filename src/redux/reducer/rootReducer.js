@@ -5,6 +5,12 @@ import test from "./test";
 import modal from "./modal";
 import currentRoom from "./currentRoom";
 
-const rootReducer = combineReducers({ userReducer, settingSlice, test, modal, currentRoom });
+const rootReducer = combineReducers({
+	userReducer,
+	settingSlice,
+	test,
+	modal,
+	currentRoom,
+});
 
 export default rootReducer;

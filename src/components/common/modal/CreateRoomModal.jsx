@@ -23,7 +23,6 @@ const CreateRoomModal = () => {
                 description: "Happy fund!"
             })
         }else{
-            console.log(res.error);
             notification["error"]({
                 message: "Error!",
                 description: "Try again!"

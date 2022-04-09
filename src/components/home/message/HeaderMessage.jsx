@@ -13,7 +13,6 @@ const WrapTitleAvatar = styled.div`
 `;
 
 const TitleAvatar = (props) => {
-	console.log(props);
 	return (
 		<WrapTitleAvatar>
 			<Space direction="horizontal">

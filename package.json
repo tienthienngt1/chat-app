@@ -21,7 +21,11 @@
     "styled-components": "^5.3.3"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "react-app-rewired --openssl-legacy-provider  start",
+=======
+    "start": "react-app-rewired --openssl-legacy-provider start",
+>>>>>>> 22f26c6 (fix 2)
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

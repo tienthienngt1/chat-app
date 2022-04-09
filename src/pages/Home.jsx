@@ -41,7 +41,6 @@ const Home = () => {
 					span={24}
 					lg={8}
 					md={10}
-					style={{ border: "1px solid red" }}
 					xxl={6}
 				>
 					<Navbar />

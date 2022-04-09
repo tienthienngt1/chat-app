@@ -7,7 +7,6 @@ export const getChatRoom = async uid => {
         let result = [] 
         const get = await getDocs(q)
         get.forEach(doc => {
-            console.log(Object.assign(doc.data(), {id: doc.id}));
             result.push(Object.assign(doc.data(), {id: doc.id}))
         })
         return {result, status: true}

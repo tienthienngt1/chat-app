@@ -14,9 +14,14 @@ import styled from "styled-components";
 import { getAuth, signOut } from "firebase/auth";
 import { useSelector } from "react-redux";
 
-const Wrap = styled.div`
-	border: 1px solid blue;
-`;
+const Setting = (props) => {
+	return (
+		<>
+			<HeaderSetting {...props} />
+			<BodySetting />
+		</>
+	);
+};
 
 const HeaderSettingWrap = styled(Row)`
 	box-shadow: 0 4px 6px -6px #222;
@@ -69,7 +74,7 @@ const FormBodySetting = (props) => {
 					{ require: true, message: "Please input your username" },
 				]}
 			>
-				<Input disabled defaultValue={props.email} />
+				<Input disabled initialValues={props.email} />
 			</Form.Item>
 		</Form>
 	);
@@ -117,15 +122,6 @@ const BodySetting = () => {
 				</Row>
 			</BodySettingWrap>
 		</>
-	);
-};
-
-const Setting = (props) => {
-	return (
-		<Wrap>
-			<HeaderSetting {...props} />
-			<BodySetting />
-		</Wrap>
 	);
 };
 

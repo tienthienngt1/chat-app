@@ -90,7 +90,6 @@ const ChatRoom = () => {
 			getRooms && setRooms(getRooms.result);
 		};
 		const subcribe = onSnapshot(collection(db, "rooms"), (doc) => {
-			doc.forEach((res) => console.log(res.data()));
 			func();
 		});
 		return () => subcribe();

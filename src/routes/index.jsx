@@ -1,6 +1,6 @@
-import { Route } from "react-router-dom";
+import {  Route } from "react-router-dom";
 import Home from "../pages/Home";
-import Landing from "../pages/landing";
+import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 
 const routesArray = [

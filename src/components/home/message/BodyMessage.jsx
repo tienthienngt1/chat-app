@@ -17,7 +17,6 @@ const WrapMessage = styled(Col)`
 `;
 
 const Message = props => {
-    console.log("message: ", props);
     useEffect(() => {
         const subcribe = onSnapshot(doc(db, "rooms", props.id), doc => {
             console.warn(doc.data());
@@ -119,7 +118,6 @@ const InputAndSend = props => {
     const user = useSelector(state => state.userReducer)
     const handleSendMessage =async e => {
         const sendReq = await updateMessage(e.target.value, {...props,user: user.user})
-        console.log(sendReq);
     }
 	return (
 		<>
@@ -168,7 +166,6 @@ const WrapRow = styled(Row)`
 `;
 
 const BodyMessage = props => {
-    console.log(props);
 	return (
 		<Row justify="center">
 			<WrapRow align="center">
