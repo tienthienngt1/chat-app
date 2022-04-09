@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Form, Input, notification } from "antd";
-import { create_room_modal_false } from "../../../redux/reducer/modal";
+import { setIsOpenFalse } from "../../../redux/slice/modalSlice";
 import { create_room } from "../../../api/create";
 
 const CreateRoomModal = () => {
 	const dispatch = useDispatch();
-	const state = useSelector((state) => state.modal.createRoomModal);
+	const {isOpen} = useSelector((state) => state.modalReducer);
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
 
 	const onCancel = () => {
-		dispatch(create_room_modal_false());
+		dispatch(setIsOpenFalse());
 	};
 	const onOk = async () => {
         setLoading(true);
@@ -27,13 +27,12 @@ const CreateRoomModal = () => {
                 message: "Error!",
                 description: "Try again!"
             })
-
         }
-        dispatch(create_room_modal_false());
+        dispatch(setIsOpenFalse());
 	};
 	return (
 		<Modal
-			visible={state}
+			visible={isOpen}
 			onCancel={onCancel}
 			title={
 				<center>

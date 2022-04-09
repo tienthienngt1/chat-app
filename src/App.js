@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 import { useEffect, useMemo, useState} from "react";
-=======
-import { useEffect } from "react";
->>>>>>> 22f26c6 (fix 2)
 import { BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import Routes from "./routes";
@@ -18,19 +15,6 @@ const Container = () => {
  const [theme, setTheme] = useState('light')
 	const history = useHistory();
 	const loginState = useSelector((state) => state.userReducer.isLogin);
-<<<<<<< HEAD
-  const user =  useMemo(() => {
-      return auth.currentUser;
-  }, [])
-	useEffect(() => {
-    if(!user){
-        localStorage.clear()
-        history.push("/login")
-    }
-		if (loginState) {
-		  history.push("/home");
-		}
-=======
 	const user = auth.currentUser;
 	useEffect(() => {
 		if (!user) {
@@ -38,35 +22,25 @@ const Container = () => {
 			history.push("/login");
 		}
 		if (loginState) history.push("/home");
->>>>>>> 22f26c6 (fix 2)
 		else history.push("/login");
 	}, [loginState, history, user]);
 	return (
 		<>
 			<Routes />
 		</>
-	);
-};
+	  )
+	}
 
 function App() {
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-<<<<<<< HEAD
 					<Router>
 						<Switch>
 							<Container />
 						</Switch>
 					</Router>
       <RootModal/>
-=======
-				<Router>
-					<Switch>
-						<Container />
-					</Switch>
-				</Router>
-				<RootModal />
->>>>>>> 22f26c6 (fix 2)
 			</PersistGate>
 		</Provider>
 	);

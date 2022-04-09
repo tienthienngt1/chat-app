@@ -14,11 +14,13 @@ const Wrap = styled(Row)`
 `;
 
 const Home = () => {
+  // set screen for mobile
 	const width = window.innerWidth;
 	const [isDisplay, setIsDisplay] = useState(true);
 	if (width < 768) {
 		if (isDisplay) setIsDisplay(false);
 	}
+	
 	useEffect(() => {
 		const subcribe = window.addEventListener("resize", () => {
 			const wd = window.innerWidth;
@@ -29,7 +31,8 @@ const Home = () => {
 			}
 		});
 		return () => subcribe;
-	}, [isDisplay]);
+	}, [isDisplay])
+	
 	return (
 		<motion.div
             initial= {{opacity: 0}}

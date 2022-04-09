@@ -14,17 +14,12 @@ const Wrap = styled.div`
 
 const LoginButton = () => {
 	const history = useHistory();
-	console.log(auth.currentUser);
 	const dispatch = useDispatch();
+	
 	const handleFbButton = () => {
 		const fbProvider = new FacebookAuthProvider();
 		signInWithPopup(auth, fbProvider)
 			.then((res) => {
-<<<<<<< HEAD
-                const {displayName, email, phoneNumber, photoURL, uid} = res.user
-                dispatch(user({displayName, email, phoneNumber, photoURL, uid, id: res.id}));
-                return history.push("/home")
-=======
 				const { displayName, email, phoneNumber, photoURL, uid } =
 					res.user;
 				dispatch(
@@ -38,14 +33,9 @@ const LoginButton = () => {
 					})
 				);
 				return history.push("/home");
->>>>>>> 22f26c6 (fix 2)
 			})
 			.catch((err) => alert("Error!"));
 	};
-<<<<<<< HEAD
-	onAuthStateChanged(auth, user => console.log('onAuth' + user));
-=======
->>>>>>> 22f26c6 (fix 2)
 	return (
 		<>
 			<Wrap>
