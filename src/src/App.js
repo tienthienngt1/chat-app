@@ -8,29 +8,30 @@ import RootModal from "./components/common/modal/RootModal";
 import {auth} from "./firebase/config"
 import "./App.css";
 import "antd/dist/antd.css";
-import styled from "styled-components";
+import styled from "styled-components"
+
+const Wrap = styled.div`
+`
 
 const Container = () => {
  const [theme, setTheme] = useState('light')
 	const history = useHistory();
 	const loginState = useSelector((state) => state.userReducer.isLogin);
-  const user =  useMemo(() => {
-      return auth.currentUser;
-  }, [])
+    const user =  useMemo(() => {
+        return auth.currentUser
+    }, [])    
 	useEffect(() => {
-    if(!user){
-        localStorage.clear()
-        history.push("/login")
-    }
-		if (loginState) {
-		  history.push("/home");
-		}
+        if(user){
+            localStorage.clear()
+            history.push("/login")
+        }
+		if (loginState) history.push("/home");
 		else history.push("/login");
 	}, [loginState, history, user]);
 	return (
-		<>
+		<Wrap>
 			<Routes />
-		</>
+		</Wrap>
 	);
 };
 
@@ -43,7 +44,7 @@ function App() {
 							<Container />
 						</Switch>
 					</Router>
-      <RootModal/>
+                    <RootModal/>
 			</PersistGate>
 		</Provider>
 	);

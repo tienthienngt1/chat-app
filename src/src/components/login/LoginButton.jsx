@@ -22,13 +22,14 @@ const LoginButton = () => {
 		const fbProvider = new FacebookAuthProvider();
 		signInWithPopup(auth, fbProvider)
 			.then((res) => {
+                console.log(res);
                 const {displayName, email, phoneNumber, photoURL, uid} = res.user
                 dispatch(user({displayName, email, phoneNumber, photoURL, uid, id: res.id}));
                 return history.push("/home")
 			})
 			.catch((err) => console.log(err));
 	};
-	onAuthStateChanged(auth, user => console.log('onAuth' + user));
+	onAuthStateChanged(auth, (res) => {});
 	return (
 		<>
 			<Wrap>

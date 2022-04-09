@@ -16,7 +16,7 @@ const pReducer = persistReducer( persistConfig, rootReducer);
 
 const store = configureStore({
     reducer: pReducer,
-    //middleware: [thunk]
+    middleware: [thunk]
 });
 const persistor = persistStore(store);
 
