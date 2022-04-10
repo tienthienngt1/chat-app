@@ -1,8 +1,0 @@
-body, *{
-    cursor: url("./assets/unavailable.cur"), auto !important;
-}
-svg[type="black"] {
-    color: black;
-    overflow: scroll;
-}
-

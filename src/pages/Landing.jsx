@@ -1,12 +1,9 @@
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config";
 
 const Landing = () => {
-    const state = useSelector((state) => state.userReducer.isLogin);
-	const history = useHistory();
-	alert(state)
-	if (state) return <>{history.push("/home")} </>;
-	else return <>{history.push("/login")} </>;
+	return <></>;
 };
 
 export default Landing;

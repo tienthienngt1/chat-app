@@ -1,15 +1,25 @@
-import {  Route } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { useLayoutEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { auth } from "../firebase/config";
 import Home from "../pages/Home";
-import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 
 const routesArray = [
-	{ path: "/", component: Landing },
 	{ path: "/home", component: Home },
 	{ path: "/login", component: Login },
 ];
 
 const Routes = () => {
+	const history = useHistory();
+	useLayoutEffect(() => {
+		onAuthStateChanged(auth, (res) => {
+			if (res) {
+				return history.push("/home");
+			}
+		});
+	}, [history]);
 	return (
 		<>
 			{routesArray.map((res) => (
