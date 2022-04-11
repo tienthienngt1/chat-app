@@ -3,11 +3,10 @@ import { Avatar, Space, Typography, Button, Tooltip, Alert } from "antd";
 import styled from "styled-components";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { create_room_modal_true } from "../../../redux/reducer/modal";
+import { setIsOpenModalTrue } from "../../../redux/slice/modalSlice";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db, auth } from "../../../firebase/config";
 import { getChatRoom } from "../../../api/read";
-import { selectCurrentRoom } from "../../../redux/reducer/currentRoom";
 
 const Wrap = styled.div`
 	padding: 10px;
@@ -36,7 +35,7 @@ const Container = styled.div`
 const CreateRoomButton = () => {
 	const dispatch = useDispatch();
 	const handleAdd = () => {
-		dispatch(create_room_modal_true());
+		dispatch(setIsOpenModalTrue());
 	};
 
 	return (
@@ -55,15 +54,9 @@ const CreateRoomButton = () => {
 	);
 };
 const Room = (props) => {
-	const dispatch = useDispatch();
-	const state = useSelector((state) => state.currentRoom);
-	const handleSelectRoom = () => {
-		dispatch(selectCurrentRoom(props));
-	};
-
 	return (
 		<>
-			<Wrap onClick={handleSelectRoom}>
+			<Wrap>
 				<Space direction="horizontal">
 					<Avatar src={props.photoURL} size="large">
 						{props?.room_name?.charAt(0)?.toUpperCase()}

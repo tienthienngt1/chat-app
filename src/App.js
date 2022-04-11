@@ -1,29 +1,31 @@
-import { useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
-import { PersistGate } from "redux-persist/lib/integration/react";
 import Routes from "./routes";
-import { Provider, useSelector } from "react-redux";
-import { store, persistor } from "./redux/store";
+import { Provider, useDispatch } from "react-redux";
+import { store } from "./redux/store";
 import RootModal from "./components/common/modal/RootModal";
 import { auth } from "./firebase/config";
 import "./App.css";
 import "antd/dist/antd.css";
 import { onAuthStateChanged } from "firebase/auth";
+import { setIsLoginTrue } from "./redux/slice/userSlice";
+import { Skeleton } from "antd";
 
 const Container = () => {
-	// const history = useHistory();
-	// useLayoutEffect(() => {
-	// 	onAuthStateChanged(auth, (res) => {
-	// 		if (res) {
-	// 			history.push("/home");
-	// 		} else history.push("login");
-	// 	});
-	// }, [history]);
-	return (
-		<>
-			<Routes />
-		</>
-	);
+	const [state, setState] = useState(false);
+	const history = useHistory();
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const subcribe = onAuthStateChanged(auth, (res) => {
+            setState(true);
+			if (res) {
+				dispatch(setIsLoginTrue(res));
+				return history.push("/home");
+			} else history.push("login");
+		});
+		return subcribe;
+	}, [history, dispatch, setState]);
+	return <>{state ? <Routes /> : <Skeleton avatar active />}</>;
 };
 
 function App() {

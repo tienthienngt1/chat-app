@@ -32,6 +32,26 @@ const Wrap = styled.div`
 	}
 `;
 
+const HeaderNavbar = props => {
+	return (
+		<Wrap>
+			<Row justify="center" align="center">
+				<Col span={4} xl={4}>
+					<CusDropDown {...props} />
+				</Col>
+				<Col span={20} xl={20}>
+					<Input
+						prefix={<SearchOutlined size="large" />}
+						size="large"
+						placeholder="Search..."
+					/>
+				</Col>
+			</Row>
+		</Wrap>
+	);
+};
+
+
 const MenuDrop = props=> {
 	const handleSetting = () => {
         props.setState(true)
@@ -82,25 +102,6 @@ const CusDropDown = props => {
 				</div>
 			</Dropdown>
 		</>
-	);
-};
-
-const HeaderNavbar = props => {
-	return (
-		<Wrap>
-			<Row justify="center" align="center">
-				<Col span={4} xl={4}>
-					<CusDropDown {...props} />
-				</Col>
-				<Col span={20} xl={20}>
-					<Input
-						prefix={<SearchOutlined size="large" />}
-						size="large"
-						placeholder="Search..."
-					/>
-				</Col>
-			</Row>
-		</Wrap>
 	);
 };
 

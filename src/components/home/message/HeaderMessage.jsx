@@ -1,6 +1,5 @@
 import { Row, Affix, Avatar, Col, Space, Typography, Tooltip } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { leaveCurrentRoom } from "../../../redux/reducer/currentRoom";
 import { ExportOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 
@@ -51,7 +50,7 @@ const HeaderMessage = (props) => {
 					</Avatar.Group>
 					<Tooltip title="Leave Chat">
 						<ExportOutlined
-							onClick={() => dispatch(leaveCurrentRoom())}
+						
 							style={{
 								fontSize: "30px",
 								margin: "0px 20px",

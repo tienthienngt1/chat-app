@@ -74,7 +74,7 @@ const FormBodySetting = (props) => {
 					{ require: true, message: "Please input your username" },
 				]}
 			>
-				<Input disabled initialValues={props.email} />
+				<Input disabled defaultValue={props.email} />
 			</Form.Item>
 		</Form>
 	);
@@ -93,8 +93,9 @@ const BodySetting = () => {
 			history.push("/login");
 		});
 	};
-	const userReducer = useSelector((state) => state.userReducer);
+	const {userReducer} = useSelector((state) => state);
 	const { user } = userReducer;
+    console.log(user);
 	return (
 		<>
 			<BodySettingWrap>

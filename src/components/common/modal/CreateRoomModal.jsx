@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Form, Input, notification } from "antd";
-import { setIsOpenFalse } from "../../../redux/slice/modalSlice";
+import { setIsOpenModalFalse } from "../../../redux/slice/modalSlice";
 import { create_room } from "../../../api/create";
+import { setCurrentRoom } from "../../../redux/slice/roomSlice";
 
 const CreateRoomModal = () => {
 	const dispatch = useDispatch();
@@ -11,13 +12,15 @@ const CreateRoomModal = () => {
 	const [loading, setLoading] = useState(false);
 
 	const onCancel = () => {
-		dispatch(setIsOpenFalse());
+		dispatch(setIsOpenModalFalse());
 	};
 	const onOk = async () => {
         setLoading(true);
 		const data = form.getFieldValue();
         const res = await create_room({...data})
+
         if(res.status){
+            dispatch(setCurrentRoom(data))
             notification["success"]({
                 message: "Create successfully!",
                 description: "Happy fund!"
@@ -28,7 +31,7 @@ const CreateRoomModal = () => {
                 description: "Try again!"
             })
         }
-        dispatch(setIsOpenFalse());
+        dispatch(setIsOpenModalFalse());
 	};
 	return (
 		<Modal
