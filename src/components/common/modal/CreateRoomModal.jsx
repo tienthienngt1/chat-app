@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Form, Input, notification } from "antd";
 import { setIsOpenModalFalse } from "../../../redux/slice/modalSlice";
-import { create_room } from "../../../api/create";
-import { setCurrentRoom } from "../../../redux/slice/roomSlice";
+import {insertRoom} from "../../../api/insert"
 
 const CreateRoomModal = () => {
 	const dispatch = useDispatch();
@@ -17,10 +16,9 @@ const CreateRoomModal = () => {
 	const onOk = async () => {
         setLoading(true);
 		const data = form.getFieldValue();
-        const res = await create_room({...data})
+        const re = await insertRoom({...data})
 
-        if(res.status){
-            dispatch(setCurrentRoom(data))
+        if(re.status){
             notification["success"]({
                 message: "Create successfully!",
                 description: "Happy fund!"

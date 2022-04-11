@@ -1,5 +1,4 @@
 import { Row, Affix, Avatar, Col, Space, Typography, Tooltip } from "antd";
-import { useSelector, useDispatch } from "react-redux";
 import { ExportOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 
@@ -32,25 +31,22 @@ const TitleAvatar = (props) => {
 };
 
 const HeaderMessage = (props) => {
-	const dispatch = useDispatch();
-	const { photo, room_name, description, infoMembers } = props.rooms.payload;
 	return (
 		<Affix style={{ background: "aliceblue" }}>
 			<Row justify="space-between" align="middle">
 				<Col>
-					<TitleAvatar {...props.rooms.payload} />
+					<TitleAvatar  {...props}/>
 				</Col>
 				<Col>
 					<Avatar.Group maxCount={1}>
-						{infoMembers?.map((info,id) => (
-							<Avatar key={id}  src={info.photoURL}>
+						{props.info_member?.map((info, id) => (
+							<Avatar key={id} src={info.photoURL}>
 								{info?.displayName?.charAt(0)?.toUpperCase()}
 							</Avatar>
 						))}
 					</Avatar.Group>
 					<Tooltip title="Leave Chat">
 						<ExportOutlined
-						
 							style={{
 								fontSize: "30px",
 								margin: "0px 20px",

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Avatar, Space, Typography, Button, Tooltip, Alert } from "antd";
 import styled from "styled-components";
 import { PlusOutlined } from "@ant-design/icons";
@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsOpenModalTrue } from "../../../redux/slice/modalSlice";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db, auth } from "../../../firebase/config";
-import { getChatRoom } from "../../../api/read";
+import { getListRoom } from "../../../api/get";
+import { setCurrentRoom, setListRoom } from "../../../redux/slice/roomSlice";
 
 const Wrap = styled.div`
 	padding: 10px;
@@ -53,10 +54,17 @@ const CreateRoomButton = () => {
 		</>
 	);
 };
+
 const Room = (props) => {
+	//definition
+	const dispatch = useDispatch();
+	const selectRoom = () => {
+		dispatch(setCurrentRoom(props));
+	};
+    //return
 	return (
 		<>
-			<Wrap>
+			<Wrap onClick={selectRoom}>
 				<Space direction="horizontal">
 					<Avatar src={props.photoURL} size="large">
 						{props?.room_name?.charAt(0)?.toUpperCase()}
@@ -74,24 +82,27 @@ const Room = (props) => {
 };
 
 const ChatRoom = () => {
-	const [rooms, setRooms] = useState();
+	// definition
+	const { listRoom } = useSelector((state) => state.roomReducer);
+	const dispatch = useDispatch();
 	const createButtonComponent = useMemo(() => <CreateRoomButton />, []);
+	//effect
 	useEffect(() => {
 		const func = async () => {
 			const getRooms =
-				auth.currentUser && (await getChatRoom(auth.currentUser.uid));
-			getRooms && setRooms(getRooms.result);
+				auth.currentUser && (await getListRoom(auth.currentUser.uid));
+			getRooms && dispatch(setListRoom(getRooms.result));
 		};
 		const subcribe = onSnapshot(collection(db, "rooms"), (doc) => {
 			func();
 		});
 		return () => subcribe();
-	}, []);
-
+	}, [dispatch]);
+	//return
 	return (
 		<Container>
-			{rooms && rooms.length ? (
-				rooms.map((rooms, id) => <Room key={id} {...rooms} />)
+			{listRoom && listRoom.length ? (
+				listRoom.map((listRoom, id) => <Room key={id} {...listRoom} />)
 			) : (
 				<Alert
 					type="info"

@@ -5,13 +5,11 @@ import reload from "./reloadPage";
 
 export const create_room = async (data) => {
     reload();
-	const { displayName, uid, email, photoURL, phoneNumber } = auth.currentUser;
 	try {
 		await addDoc(collection(db, "rooms"), {
 			...data,
 			photo: "",
 			members: [auth.currentUser.uid],
-			infoMembers: [{ displayName, uid, email, phoneNumber, photoURL }],
 			created_at: serverTimestamp(),
 		});
 		return { status: true };

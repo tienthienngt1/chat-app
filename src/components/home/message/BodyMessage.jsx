@@ -1,11 +1,12 @@
-import {useEffect} from "react"
+import { useEffect, useState } from "react";
 import { Typography, Col, Tooltip, Input, Row, Avatar } from "antd";
 import { SendOutlined, SmileOutlined } from "@ant-design/icons";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { updateMessage } from "../../../api/update";
-import {onSnapshot, doc} from "firebase/firestore"
-import {db} from "../../../firebase/config"
+import { onSnapshot, doc } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { insertMessage } from "../../../api/insert";
 
 const WrapMessage = styled(Col)`
 	background: ${(props) => props.background};
@@ -16,13 +17,13 @@ const WrapMessage = styled(Col)`
 		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 `;
 
-const Message = props => {
-    useEffect(() => {
-        const subcribe = onSnapshot(doc(db, "rooms", props.id), doc => {
-            console.warn(doc.data());
-        })
-        return subcribe
-    }, [props])
+const Message = (props) => {
+	// useEffect(() => {
+	//     const subcribe = onSnapshot(doc(db, "rooms", props.id), doc => {
+	//         console.warn(doc.data());
+	//     })
+	//     return subcribe
+	// }, [props])
 	return (
 		<>
 			<Row align="bottom">
@@ -31,8 +32,8 @@ const Message = props => {
 						justify="end"
 						style={{
 							wordBreak: "break-word",
-                            padding: "0px 10px",
-                            marginTop: "10px",
+							padding: "0px 10px",
+							marginTop: "10px",
 						}}
 					>
 						<WrapMessage background="#d8c3fa9c">
@@ -68,8 +69,8 @@ const Message = props => {
 					<Row
 						style={{
 							wordBreak: "break-word",
-                            padding: "0px 10px",
-                            marginTop: "10px",
+							padding: "0px 10px",
+							marginTop: "10px",
 						}}
 					>
 						<WrapMessage background="white">
@@ -91,7 +92,7 @@ const WrapMessageContent = styled(Row)`
 	height: 100%;
 `;
 
-const MessageContent = props => {
+const MessageContent = (props) => {
 	return (
 		<WrapMessageContent align="bottom">
 			<Col span={24}>
@@ -114,30 +115,32 @@ const WrapInput = styled.div`
 	}
 `;
 
-const InputAndSend = props => {
-    const user = useSelector(state => state.userReducer)
-    const handleSendMessage =async e => {
-        const sendReq = await updateMessage(e.target.value, {...props,user: user.user})
-    }
+const InputAndSend = (props) => {
+    const [valueInput, setValueInput] = useState('')
+    console.log(props);
+	const handleSendMessage = async (e) => {
+        const a = await insertMessage(props, valueInput)
+        console.log(a);
+        setValueInput("")
+	};
 	return (
 		<>
 			<Row align="middle">
 				<Col span={19} sm={21} lg={22}>
 					<WrapInput>
-						<Row justify="start">
-							<Col span={2} lg={1}>
-								<SmileOutlined style={{ fontSize: "30px" }} />
-							</Col>
-							<Col span={22} lg={23}>
-								<Input placeholder="Message" bordered={false} onPressEnter = {handleSendMessage}/>
-							</Col>
-						</Row>
+						<Input
+							placeholder="Message"
+							bordered={false}
+                            value={valueInput}
+                            onChange = {e => setValueInput(e.target.value)}
+							onPressEnter={handleSendMessage}
+						/>
 					</WrapInput>
 				</Col>
 				<Col span={5} sm={3} lg={2}>
 					<Tooltip title="Send Message">
 						<SendOutlined
-                            onClick={handleSendMessage}
+							onClick={handleSendMessage}
 							style={{ fontSize: "20px", marginLeft: "15px" }}
 						/>
 					</Tooltip>
@@ -165,7 +168,7 @@ const WrapRow = styled(Row)`
 	}
 `;
 
-const BodyMessage = props => {
+const BodyMessage = (props) => {
 	return (
 		<Row justify="center">
 			<WrapRow align="center">
@@ -173,7 +176,7 @@ const BodyMessage = props => {
 					<MessageContent {...props} />
 				</Col>
 				<Col span={24}>
-					<InputAndSend {...props}/>
+					<InputAndSend {...props} />
 				</Col>
 			</WrapRow>
 		</Row>

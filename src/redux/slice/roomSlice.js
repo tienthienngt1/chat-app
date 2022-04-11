@@ -15,9 +15,12 @@ const roomSlice = createSlice({
         "setListRoom": (state, payload) => {
             state.listRoom = payload.payload
         },
-        
+        "resetRoom": state => {
+            state.currentRoom = null
+            state.listRoom = null
+        }
     }
 })
 
-export const {setCurrentRoom} = roomSlice.actions
+export const {setCurrentRoom, setListRoom, resetRoom} = roomSlice.actions
 export default roomSlice.reducer

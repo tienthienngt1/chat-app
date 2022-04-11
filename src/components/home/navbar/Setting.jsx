@@ -93,19 +93,17 @@ const BodySetting = () => {
 			history.push("/login");
 		});
 	};
-	const {userReducer} = useSelector((state) => state);
+	const { userReducer } = useSelector((state) => state);
 	const { user } = userReducer;
-    console.log(user);
 	return (
 		<>
 			<BodySettingWrap>
 				<Row justify="center" align="center">
-					<Avatar size="large" src={user.photoURL}>
-						{" "}
-						{user.displayName?.slice(0, 1)?.toUpperCase()}{" "}
+					<Avatar size="large" src={user && user.photoURL} >
+						{user && user.displayName?.slice(0, 1)?.toUpperCase()}
 					</Avatar>
 					<Typography.Title level={2} style={{ marginLeft: "10px" }}>
-						{user.displayName}
+						{user && user.displayName}
 					</Typography.Title>
 				</Row>
 				<FormBodySetting style={{ margin: "20px 0px" }} {...user} />

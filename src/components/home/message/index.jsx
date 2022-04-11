@@ -11,10 +11,10 @@ const Wrap = styled(Row)`
 `;
 
 const Message = () => {
-    const currentRoom = useSelector((state) => state.currentRoom);
+    const {currentRoom} = useSelector((state) => state.roomReducer);
 	return (
 		<Wrap justify="center">
-			{currentRoom && currentRoom.is ? (
+			{currentRoom ? (
 				<>
 					<Col>
 						<Affix offsetTop>
@@ -22,7 +22,7 @@ const Message = () => {
 						</Affix>
 					</Col>
 					<Col>
-						<BodyMessage {...currentRoom.rooms.payload}/>
+						<BodyMessage {...currentRoom}/>
 					</Col>
 				</>
 			) : (
