@@ -23,7 +23,6 @@ const Container = () => {
 		const subcribe = onAuthStateChanged(auth, (res) => {
 			setState(true);
 			if (res) {
-                console.log("login");
                 //get list user room
 				const listUser  = async () => {
 					const a = await getListRoom(res.uid);

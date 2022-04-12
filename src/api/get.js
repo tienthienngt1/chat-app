@@ -30,11 +30,10 @@ export const getListRoom = async (uid) => {
 export const onSnapshotRoom = id => {
   try {
     onSnapshot(doc(db, "rooms", id), doc => {
-      console.log(doc.data())
-      return doc.data()
+        const result = doc.data()
+      return {result, status: true} 
     })
   }catch (error){
-    return error
+    return {status: false}
   }
-  const docRoom = doc(db, 'rooms', id);
 }

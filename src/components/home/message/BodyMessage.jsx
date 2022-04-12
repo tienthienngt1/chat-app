@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { Typography, Col, Tooltip, Input, Row, Avatar } from "antd";
-import { SendOutlined, SmileOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import {
+	DownCircleFilled,
+	SendOutlined,
+	SmileOutlined,
+} from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { onSnapshot, doc } from "firebase/firestore";
 import { updateMessage } from "../../../api/update";
 import { onSnapshotRoom } from "../../../api/get";
-import { db } from "../../../firebase/config";
+import { db, auth } from "../../../firebase/config";
 import { insertMessage } from "../../../api/insert";
+import { setCurrentRoom } from "../../../redux/slice/roomSlice";
 
 const WrapMessage = styled(Col)`
 	background: ${(props) => props.background};
@@ -19,66 +24,89 @@ const WrapMessage = styled(Col)`
 `;
 
 const Message = (props) => {
+	const message = props.messages;
 	return (
 		<>
-			<Row align="bottom">
-				<Col span={20} md={21} lg={22}>
-					<Row
-						justify="end"
-						style={{
-							wordBreak: "break-word",
-							padding: "0px 10px",
-							marginTop: "10px",
-						}}
-					>
-						<WrapMessage background="#d8c3fa9c">
-							<Typography.Title
-								level={4}
-								style={{ textAlign: "right" }}
-							>
-								Nguyen Tien Thien
-							</Typography.Title>
-							<Typography.Text>
-								1wefooooooooooooofwefooooooooooooofwefooooooooo
-							</Typography.Text>
-						</WrapMessage>
-					</Row>
-				</Col>
-				<Col span={4} md={3} lg={2}>
-					<Row>
-						<Avatar src="" size="large">
-							aeb
-						</Avatar>
-					</Row>
-				</Col>
-			</Row>
-			<Row align="bottom" style={{ margin: "10px 0px" }}>
-				<Col span={4} md={3} lg={2}>
-					<Row justify="end">
-						<Avatar src="" size="large">
-							aeb
-						</Avatar>
-					</Row>
-				</Col>
-				<Col span={20} md={21} lg={22}>
-					<Row
-						style={{
-							wordBreak: "break-word",
-							padding: "0px 10px",
-							marginTop: "10px",
-						}}
-					>
-						<WrapMessage background="white">
-							<Typography.Title level={4}>
-								Nguyen Tien Thien
-							</Typography.Title>
-							<Typography.Text>
-								1wefooooooooooooofwefooooooooooooofwefooooooooo
-							</Typography.Text>
-						</WrapMessage>
-					</Row>
-				</Col>
-			</Row>
+			{message &&
+				message.map((mess, id) =>
+					mess.user.id === auth.currentUser.uid ? (
+						<Row
+							key={id}
+							align="bottom"
+							style={{
+								margin: "10px 0px",
+							}}
+						>
+							<Col span={20} md={21} lg={22}>
+								<Row
+									justify="end"
+									style={{
+										wordBreak: "break-word",
+										padding: "0px 10px",
+										marginTop: "10px",
+									}}
+								>
+									<WrapMessage background="#d8c3fa9c">
+										<Typography.Title
+											level={4}
+											style={{ textAlign: "right" }}
+										>
+											{mess && mess.user.displayName}
+										</Typography.Title>
+										<Typography.Text>
+											{mess && mess.message}
+										</Typography.Text>
+									</WrapMessage>
+								</Row>
+							</Col>
+							<Col span={4} md={3} lg={2}>
+								<Row>
+									<Avatar
+										src={mess && mess.user.photoURL}
+										size="large"
+									>
+										{mess?.user.displayName?.charAt(0).toUpperCase()}
+									</Avatar>
+								</Row>
+							</Col>
+						</Row>
+					) : (
+						<Row
+							key={id}
+							align="bottom"
+							style={{ margin: "10px 0px" }}
+						>
+							<Col span={4} md={3} lg={2}>
+								<Row justify="end">
+									<Avatar
+										src={mess && mess.user.photoURL}
+										size="large"
+									>
+										{mess?.user.displayName?.charAt(0)?.toUpperCase()}
+									</Avatar>
+								</Row>
+							</Col>
+							<Col span={20} md={21} lg={22}>
+								<Row
+									style={{
+										wordBreak: "break-word",
+										padding: "0px 10px",
+										marginTop: "10px",
+									}}
+								>
+									<WrapMessage background="white">
+										<Typography.Title level={4}>
+                                        {mess && mess.user.displayName}
+										</Typography.Title>
+										<Typography.Text>
+										{mess && mess.message}
+										</Typography.Text>
+									</WrapMessage>
+								</Row>
+							</Col>
+						</Row>
+					)
+				)}
 		</>
 	);
 };
@@ -88,10 +116,6 @@ const WrapMessageContent = styled(Row)`
 `;
 
 const MessageContent = (props) => {
-	useEffect(() => {
-	  const subcribe = onSnapshotRoom(props.id)
-	  console.log(subcribe)
-	}, [props])
 	return (
 		<WrapMessageContent align="bottom">
 			<Col span={24}>
@@ -115,13 +139,17 @@ const WrapInput = styled.div`
 `;
 
 const InputAndSend = (props) => {
-    const [valueInput, setValueInput] = useState('')
-	  const handleSendMessage = async (e) => {
-      const a = await insertMessage(props, valueInput)
-        if(a.status){
-          
-        }
-       setValueInput("")
+	const dispatch = useDispatch();
+	const [valueInput, setValueInput] = useState("");
+	const handleSendMessage = async (e) => {
+		const res = await insertMessage(props, valueInput);
+		console.log(res);
+		if (res.status) {
+			onSnapshot(doc(db, "rooms", props.id), (docs) => {
+				dispatch(setCurrentRoom({ ...docs.data(), id: docs.id }));
+			});
+		}
+		setValueInput("");
 	};
 	return (
 		<>
@@ -131,8 +159,8 @@ const InputAndSend = (props) => {
 						<Input
 							placeholder="Message"
 							bordered={false}
-                            value={valueInput}
-                            onChange = {e => setValueInput(e.target.value)}
+							value={valueInput}
+							onChange={(e) => setValueInput(e.target.value)}
 							onPressEnter={handleSendMessage}
 						/>
 					</WrapInput>
