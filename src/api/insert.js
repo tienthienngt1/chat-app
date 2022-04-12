@@ -1,4 +1,4 @@
-import { collection, setDoc, addDoc, doc, serverTimestamp } from "@firebase/firestore";
+import { collection, setDoc,updateDoc, addDoc, doc, serverTimestamp } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import { auth } from "../firebase/config";
 import reload from "./reloadPage";
@@ -14,6 +14,7 @@ export const insertRoom = async (data) => {
 			...data,
 			photo: "",
 			members: [uid],
+			messages: [], 
             info_member: [{infoUser}],
 			created_at: serverTimestamp(),
 		});
@@ -24,17 +25,20 @@ export const insertRoom = async (data) => {
 };
 
 export const insertMessage = async (room, message) => {
-    console.log(room);
-    console.log(message);
-    reload();
+    reload()
+    const convertMess = Array.from(room.messages)
+    convertMess.push({
+      message,
+      created_at: serverTimestamp(),
+      user: {
+        id: auth.currentUser.uid,
+        displayName: auth.currentUser.displayName,
+        photoURL: auth.currentUser.photoURL,
+      }
+    })
     try {
-        await setDoc(doc(collection(db, "messages"), room.id), {
-            content: [{
-                message: message,
-                photoURL: auth.currentUser.photoURL,
-                displayName: auth.currentUser.displayName,
-                created_at: new Date(),
-            }]
+        await updateDoc(doc(collection(db, "rooms"), room.id), {
+            messages: convertMess,
         })
         return {status: true}
     } catch (error) {

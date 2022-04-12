@@ -3,8 +3,9 @@ import { Typography, Col, Tooltip, Input, Row, Avatar } from "antd";
 import { SendOutlined, SmileOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { updateMessage } from "../../../api/update";
 import { onSnapshot, doc } from "firebase/firestore";
+import { updateMessage } from "../../../api/update";
+import { onSnapshotRoom } from "../../../api/get";
 import { db } from "../../../firebase/config";
 import { insertMessage } from "../../../api/insert";
 
@@ -18,12 +19,6 @@ const WrapMessage = styled(Col)`
 `;
 
 const Message = (props) => {
-	// useEffect(() => {
-	//     const subcribe = onSnapshot(doc(db, "rooms", props.id), doc => {
-	//         console.warn(doc.data());
-	//     })
-	//     return subcribe
-	// }, [props])
 	return (
 		<>
 			<Row align="bottom">
@@ -93,6 +88,10 @@ const WrapMessageContent = styled(Row)`
 `;
 
 const MessageContent = (props) => {
+	useEffect(() => {
+	  const subcribe = onSnapshotRoom(props.id)
+	  console.log(subcribe)
+	}, [props])
 	return (
 		<WrapMessageContent align="bottom">
 			<Col span={24}>
@@ -117,11 +116,12 @@ const WrapInput = styled.div`
 
 const InputAndSend = (props) => {
     const [valueInput, setValueInput] = useState('')
-    console.log(props);
-	const handleSendMessage = async (e) => {
-        const a = await insertMessage(props, valueInput)
-        console.log(a);
-        setValueInput("")
+	  const handleSendMessage = async (e) => {
+      const a = await insertMessage(props, valueInput)
+        if(a.status){
+          
+        }
+       setValueInput("")
 	};
 	return (
 		<>
