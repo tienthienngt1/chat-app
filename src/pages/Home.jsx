@@ -6,7 +6,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 const Wrap = styled(Row)`
-	height: 100vh;
+	height: 90vh;
+	border: 2px solid blue;
 	#background_message {
 		background: rgb(2, 0, 36);
 		background: linear-gradient(90deg, #6aab9c 0%, #5874dc 100%);
@@ -30,20 +31,20 @@ const Home = () => {
 				if (!isDisplay) setIsDisplay(true);
 			}
 		});
-		return () => subcribe;
-	}, [isDisplay]);
-
+		return subcribe;
+	}, [isDisplay])
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 1, delay: 0.5 }}
+			style={{ height: "70vh", border: "4px solid black" }}
 		>
 			<Wrap justify="center">
 				<Col span={24} lg={8} md={10} xxl={6}>
 					<Navbar />
 				</Col>
-				{isDisplay && (
+				{ isDisplay ? (
 					<Col
 						id="background_message"
 						span={24}
@@ -52,8 +53,7 @@ const Home = () => {
 						xxl={18}
 					>
 						<Message />
-					</Col>
-				)}
+					</Col>) : '' }
 			</Wrap>
 		</motion.div>
 	);

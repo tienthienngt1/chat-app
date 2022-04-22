@@ -34,7 +34,7 @@ const HeaderSetting = (props) => {
 			<Col>
 				<Tooltip title="Back">
 					<Button
-						onClick={() => props.setState(false)}
+						onClick={() => props.setState(0)}
 						icon={<ArrowLeftOutlined />}
 						size="large"
 						shape="circle"

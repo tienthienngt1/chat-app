@@ -17,7 +17,6 @@ const roomSlice = createSlice({
         },
         "resetRoom": state => {
             state.currentRoom = null
-            state.listRoom = null
         }
     }
 })

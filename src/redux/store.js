@@ -12,8 +12,6 @@ const persistConfig = {
 	whitelist: ["userReducer"],
 };
 
-const pReducer = persistReducer( persistConfig, rootReducer);
-
 const store = configureStore({
     reducer: rootReducer,
     //middleware: [thunk]

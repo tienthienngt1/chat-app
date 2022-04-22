@@ -9,6 +9,8 @@ import {
 	Col,
 	Dropdown,
 	Switch,
+	Button,
+	Tooltip
 } from "antd";
 import Icon, {
 	MenuOutlined,
@@ -16,7 +18,10 @@ import Icon, {
 	SearchOutlined,
 	CloseOutlined,
 	FireOutlined,
+	PlusOutlined
 } from "@ant-design/icons";
+import {useDispatch} from "react-redux"
+import { setIsOpenModalTrue } from "../../../redux/slice/modalSlice";
 
 const Wrap = styled.div`
 	position: absolute;
@@ -36,29 +41,50 @@ const HeaderNavbar = props => {
 	return (
 		<Wrap>
 			<Row justify="center" align="center">
-				<Col span={4} xl={4}>
+				<Col span={4}>
 					<CusDropDown {...props} />
 				</Col>
-				<Col span={20} xl={20}>
+				<Col span={16}>
 					<Input
 						prefix={<SearchOutlined size="large" />}
 						size="large"
 						placeholder="Search..."
 					/>
 				</Col>
+				<Col span={4}>
+				  <CreateRoomButton />
+				</Col>
 			</Row>
 		</Wrap>
 	);
 };
 
+const CreateRoomButton = () => {
+	const dispatch = useDispatch();
+	const handleAdd = () => {
+		dispatch(setIsOpenModalTrue());
+	};
+
+	return (
+		<>
+			<Tooltip title="Create Chat Room">
+				<Button
+					shape="circle"
+					size="large"
+					type="primary"
+					onClick={handleAdd}
+				>
+					<PlusOutlined />
+				</Button>
+			</Tooltip>
+		</>
+	);
+};
 
 const MenuDrop = props=> {
-	const handleSetting = () => {
-        props.setState(true)
-	};
 	return (
 		<Menu style={{ borderRadius: "10px" }}>
-			<Menu.Item key="0"  onClick={handleSetting} style={{borderRadius: "10px"}}>
+			<Menu.Item key="0"  onClick={() => props.setState(1)} style={{borderRadius: "10px"}}>
 				<Space>
 					<SettingOutlined />
 					<Typography.Text>Setting</Typography.Text>
@@ -93,7 +119,7 @@ const CusDropDown = props => {
 						/>
 					) : (
 						<Icon
-                            type="black"
+              type="black"
 							style={{ fontSize: "30px" }}
 							component={MenuOutlined}
 							onClick={() => setIsDisplay(true)}

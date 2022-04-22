@@ -23,13 +23,13 @@ const Container = () => {
 		const subcribe = onAuthStateChanged(auth, (res) => {
 			setState(true);
 			if (res) {
-                //get list user room
+        //get list user room
 				const listUser  = async () => {
 					const a = await getListRoom(res.uid);
 					dispatch(setListRoom(a.result))
 				}
                 listUser()
-                //set state login and user
+          //set state login and user
 				dispatch(setIsLoginTrue(res));
                 //return
 				setState(true);
