@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, useHistory } from "react-router-dom";
 import Routes from "./routes";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "./redux/store";
 import RootModal from "./components/common/modal/RootModal";
 import { auth } from "./firebase/config";
@@ -12,6 +12,7 @@ import { setIsLoginFalse, setIsLoginTrue } from "./redux/slice/userSlice";
 import Loading from "./components/common/Loading";
 import { getListRoom } from "./api/get";
 import { resetRoom, setListRoom } from "./redux/slice/roomSlice";
+import { setLoadingFalse, setLoadingTrue } from "./redux/slice/themeSlice";
 import styled from "styled-components"
 
 const WrapContainer = styled.div`
@@ -19,13 +20,13 @@ const WrapContainer = styled.div`
 
 const Container = () => {
 	//definition
-  const [state, setState] = useState(false);
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const {loading} = useSelector(state=>state.themeReducer)
     //useEffect
 	useEffect(() => {
 		const subcribe = onAuthStateChanged(auth, (res) => {
-			setState(true);
+			dispatch(setLoadingTrue());
 			if (res) {
         //get list user room
 				const listUser  = async () => {
@@ -35,19 +36,18 @@ const Container = () => {
         listUser()
         //set state login and user
 				dispatch(setIsLoginTrue(res));
-				setState(true);
+			  dispatch(setLoadingFalse());
 				return history.push("/home");
 			} else {
           dispatch(setIsLoginFalse())
           dispatch(resetRoom())
-          dispatch(resetRoom())
-				  setState(true);
+			    dispatch(setLoadingFalse());
 				return history.push("login");
 			}
 		});
 		return subcribe;
-	}, [history, dispatch, setState]);
-	return <>{state ? <WrapContainer> <Routes /> </WrapContainer> : <Loading />}</>;
+	}, [history, dispatch]);
+	return <>{!loading ? <WrapContainer> <Routes/> </WrapContainer> : <Loading />}</>;
 };
 
 function App() {

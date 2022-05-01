@@ -10,6 +10,7 @@ const initialState = {
     background: "#00152a",
     color: "#fff",
   },
+  loading: false,
 }
 
 const themeSlice = createSlice({
@@ -19,8 +20,14 @@ const themeSlice = createSlice({
     setTheme: state => {
       state.theme = !state.theme
     },
+    setLoadingTrue: state => {
+      state.loading = true
+    },
+    setLoadingFalse: state => {
+      state.loading = false
+    },
   }
 })
 
-export const {setTheme} = themeSlice.actions
+export const {setTheme, setLoadingFalse, setLoadingTrue} = themeSlice.actions
 export default themeSlice.reducer
