@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.4fc7aa77.chunk.css",
-    "main.js": "/static/js/main.720f0bc4.chunk.js",
-    "main.js.map": "/static/js/main.720f0bc4.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.453f6245.js",
-    "runtime-main.js.map": "/static/js/runtime-main.453f6245.js.map",
-    "static/css/2.e8f3d0bd.chunk.css": "/static/css/2.e8f3d0bd.chunk.css",
-    "static/js/2.8bbe499c.chunk.js": "/static/js/2.8bbe499c.chunk.js",
-    "static/js/2.8bbe499c.chunk.js.map": "/static/js/2.8bbe499c.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.e8f3d0bd.chunk.css.map": "/static/css/2.e8f3d0bd.chunk.css.map",
-    "static/css/main.4fc7aa77.chunk.css.map": "/static/css/main.4fc7aa77.chunk.css.map",
-    "static/js/2.8bbe499c.chunk.js.LICENSE.txt": "/static/js/2.8bbe499c.chunk.js.LICENSE.txt",
-    "static/media/author.48cafb7b.gif": "/static/media/author.48cafb7b.gif",
-    "static/media/logo.e6ac4b87.png": "/static/media/logo.e6ac4b87.png",
-    "static/media/App.css": "/static/media/unavailable.0d16c1fc.cur"
+    "main.css": "/chat-app/static/css/main.3c51e02b.chunk.css",
+    "main.js": "/chat-app/static/js/main.720f0bc4.chunk.js",
+    "main.js.map": "/chat-app/static/js/main.720f0bc4.chunk.js.map",
+    "runtime-main.js": "/chat-app/static/js/runtime-main.d49ce9c3.js",
+    "runtime-main.js.map": "/chat-app/static/js/runtime-main.d49ce9c3.js.map",
+    "static/css/2.e8f3d0bd.chunk.css": "/chat-app/static/css/2.e8f3d0bd.chunk.css",
+    "static/js/2.fb8a4a1a.chunk.js": "/chat-app/static/js/2.fb8a4a1a.chunk.js",
+    "static/js/2.fb8a4a1a.chunk.js.map": "/chat-app/static/js/2.fb8a4a1a.chunk.js.map",
+    "index.html": "/chat-app/index.html",
+    "static/css/2.e8f3d0bd.chunk.css.map": "/chat-app/static/css/2.e8f3d0bd.chunk.css.map",
+    "static/css/main.3c51e02b.chunk.css.map": "/chat-app/static/css/main.3c51e02b.chunk.css.map",
+    "static/js/2.fb8a4a1a.chunk.js.LICENSE.txt": "/chat-app/static/js/2.fb8a4a1a.chunk.js.LICENSE.txt",
+    "static/media/author.48cafb7b.gif": "/chat-app/static/media/author.48cafb7b.gif",
+    "static/media/logo.e6ac4b87.png": "/chat-app/static/media/logo.e6ac4b87.png",
+    "static/media/App.css": "/chat-app/static/media/unavailable.0d16c1fc.cur"
   },
   "entrypoints": [
-    "static/js/runtime-main.453f6245.js",
+    "static/js/runtime-main.d49ce9c3.js",
     "static/css/2.e8f3d0bd.chunk.css",
-    "static/js/2.8bbe499c.chunk.js",
-    "static/css/main.4fc7aa77.chunk.css",
+    "static/js/2.fb8a4a1a.chunk.js",
+    "static/css/main.3c51e02b.chunk.css",
     "static/js/main.720f0bc4.chunk.js"
   ]
 }
