@@ -12,10 +12,14 @@ import { setIsLoginFalse, setIsLoginTrue } from "./redux/slice/userSlice";
 import Loading from "./components/common/Loading";
 import { getListRoom } from "./api/get";
 import { resetRoom, setListRoom } from "./redux/slice/roomSlice";
+import styled from "styled-components"
+
+const WrapContainer = styled.div`
+`
 
 const Container = () => {
 	//definition
-    const [state, setState] = useState(false);
+  const [state, setState] = useState(false);
 	const history = useHistory();
 	const dispatch = useDispatch();
     //useEffect
@@ -28,23 +32,22 @@ const Container = () => {
 					const a = await getListRoom(res.uid);
 					dispatch(setListRoom(a.result))
 				}
-                listUser()
-          //set state login and user
+        listUser()
+        //set state login and user
 				dispatch(setIsLoginTrue(res));
-                //return
 				setState(true);
 				return history.push("/home");
 			} else {
-                dispatch(setIsLoginFalse())
-                dispatch(resetRoom())
-                dispatch(resetRoom())
-				setState(true);
+          dispatch(setIsLoginFalse())
+          dispatch(resetRoom())
+          dispatch(resetRoom())
+				  setState(true);
 				return history.push("login");
 			}
 		});
 		return subcribe;
 	}, [history, dispatch, setState]);
-	return <>{state ? <Routes /> : <Loading />}</>;
+	return <>{state ? <WrapContainer> <Routes /> </WrapContainer> : <Loading />}</>;
 };
 
 function App() {

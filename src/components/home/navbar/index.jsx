@@ -31,7 +31,7 @@ const Navbar = () => {
 			)
 			:
 			(
-				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} >
 						<HeaderNavbar setState={setState} />
 						<ChatRoom setState = {setState}/>
 				</motion.div>

@@ -26,11 +26,16 @@ const Setting = (props) => {
 const HeaderSettingWrap = styled(Row)`
 	box-shadow: 0 4px 6px -6px #222;
 	margin-bottom: 20px;
+	.ant-typography{ 
+	  margin-left: 20px;
+	  ${props => props.theme.theme ? props.theme.light : props.theme.dark}
+	}
 `;
 
 const HeaderSetting = (props) => {
+  const theme = useSelector(state => state.themeReducer)
 	return (
-		<HeaderSettingWrap justify="start" align="middle">
+		<HeaderSettingWrap justify="start" align="middle" theme={theme}>
 			<Col>
 				<Tooltip title="Back">
 					<Button
@@ -42,7 +47,7 @@ const HeaderSetting = (props) => {
 				</Tooltip>
 			</Col>
 			<Col>
-				<Typography.Title level={2} style={{ marginLeft: "20px" }}>
+				<Typography.Title level={2}>
 					Settings
 				</Typography.Title>
 			</Col>
@@ -82,6 +87,9 @@ const FormBodySetting = (props) => {
 
 const BodySettingWrap = styled.div`
 	padding: 5px;
+  .ant-typography, label{
+    ${props => props.theme.theme ? props.theme.light : props.theme.dark}
+  }
 `;
 
 const BodySetting = () => {
@@ -93,11 +101,11 @@ const BodySetting = () => {
 			history.push("/login");
 		});
 	};
-	const { userReducer } = useSelector((state) => state);
+	const { userReducer, themeReducer } = useSelector((state) => state);
 	const { user } = userReducer;
 	return (
 		<>
-			<BodySettingWrap>
+			<BodySettingWrap theme={themeReducer}>
 				<Row justify="center" align="center">
 					<Avatar size="large" src={user && user.photoURL} >
 						{user && user.displayName?.slice(0, 1)?.toUpperCase()}

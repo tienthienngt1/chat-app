@@ -1,8 +1,11 @@
-body, *{
-    cursor: url("./assets/unavailable.cur"), auto !important;
+body {
+  cursor: url("./assets/unavailable.cur"), auto !important;
+  transition: all 200ms;
 }
 svg[type="black"] {
-    color: black;
-    overflow: scroll;
+  color: black;
+  overflow: scroll;
 }
-
+li:active, li:hover, li:visited{
+  background: red, auto !important;
+}

@@ -3,10 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { Modal, Form, Input, notification } from "antd";
 import { setIsOpenModalFalse } from "../../../redux/slice/modalSlice";
 import {insertRoom} from "../../../api/insert"
+import styled from "styled-components"
+
+const ModalWrap= styled(Modal)`
+  .ant-modal{
+    &-content, &-header, label, h2{
+      ${props => props.theme.theme ? props.theme.light : props.theme.dark}
+    }
+  }
+  label, h2{
+      ${props => props.theme.theme ? props.theme.light : props.theme.dark}
+    }
+`
 
 const CreateRoomModal = () => {
 	const dispatch = useDispatch();
-	const {isOpen} = useSelector((state) => state.modalReducer);
+	const {modalReducer: {isOpen}, themeReducer} = useSelector((state) => state);
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
 
@@ -14,25 +26,34 @@ const CreateRoomModal = () => {
 		dispatch(setIsOpenModalFalse());
 	};
 	const onOk = async () => {
-        setLoading(true);
+    setLoading(true);
 		const data = form.getFieldValue();
-        const re = await insertRoom({...data})
+		if(!data.room_name || !data.description){
+      dispatch(setIsOpenModalFalse());
+      notification["warning"]({
+        message: "WARNING!",
+        description: "Room name or description rooms invalid!"
+      })
+		  return;
+		}
+    const re = await insertRoom({...data})
 
-        if(re.status){
-            notification["success"]({
-                message: "Create successfully!",
-                description: "Happy fund!"
-            })
-        }else{
-            notification["error"]({
-                message: "Error!",
-                description: "Try again!"
-            })
-        }
-        dispatch(setIsOpenModalFalse());
-	};
+    if(re.status){
+      notification["success"]({
+        message: "Create successfully!",
+        description: "Happy fund!"
+      })
+    }else{
+      notification["error"]({
+        message: "Error!",
+        description: "Try again!"
+      })
+    }
+    dispatch(setIsOpenModalFalse());
+};
 	return (
-		<Modal
+		<ModalWrap
+		  theme={themeReducer}
 			visible={isOpen}
 			onCancel={onCancel}
 			title={
@@ -41,7 +62,7 @@ const CreateRoomModal = () => {
 				</center>
 			}
 			onOk={onOk}
-            confirmLoading={loading}
+      confirmLoading={loading}
 		>
 			<Form form={form}>
 				<Form.Item
@@ -61,7 +82,7 @@ const CreateRoomModal = () => {
 					<Input.TextArea placeholder="Description..." />
 				</Form.Item>
 			</Form>
-		</Modal>
+		</ModalWrap>
 	);
 };
 

@@ -10,11 +10,12 @@ import { setCurrentRoom, setListRoom } from "../../../redux/slice/roomSlice";
 
 const Container = styled.div`
 	margin-top: 65px;
-	border: 5px solid red;
 	position: relative;
-	height: 70vh;
+	height: 80vh;
 	overflow: scroll;
 	padding: 5px;
+	border-top: 2px solid #000;
+	border-right: 2px solid #000;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 	/* Hide scrollbar for Chrome, Safari and Opera */
@@ -25,6 +26,9 @@ const Container = styled.div`
 		position: absolute;
 		bottom: 20px;
 		right: 10px;
+	}
+	.cs-conversation__name, .cs-conversation__info{
+	   color: ${props => props.theme.theme ? '#000' : '#fff'}
 	}
 `;
 
@@ -49,7 +53,7 @@ const Room = (props) => {
 
 const ChatRoom = (props) => {
 	// definition
-	const { listRoom } = useSelector((state) => state.roomReducer);
+	const { roomReducer: {listRoom}, themeReducer } = useSelector((state) => state);
 	const dispatch = useDispatch();
 	//effect
 	useEffect(() => {
@@ -65,7 +69,7 @@ const ChatRoom = (props) => {
 	}, [dispatch]);
 	//return
 	return (
-		<Container>
+		<Container theme={themeReducer}>
 				<ConversationList>
 			{listRoom && listRoom.length ? (
 				listRoom.map((listRoom, id) => <Room key={id} {...listRoom} {...props} />)

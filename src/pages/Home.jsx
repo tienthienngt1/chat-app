@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
-import Message from "../components/home/message";
-import Navbar from "../components/home/navbar";
 import { Row, Col } from "antd";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import {useSelector} from "react-redux";
+import Message from "../components/home/message";
+import Navbar from "../components/home/navbar";
 
 const Wrap = styled(Row)`
 	height: 90vh;
-	border: 2px solid blue;
-	#background_message {
-		background: rgb(2, 0, 36);
-		background: linear-gradient(90deg, #6aab9c 0%, #5874dc 100%);
-	}
+	${props => props.theme.theme ? props.theme.light : props.theme.dark}
 `;
 
 const Home = () => {
@@ -21,7 +18,9 @@ const Home = () => {
 	if (width < 768) {
 		if (isDisplay) setIsDisplay(false);
 	}
-
+  //get theme
+  const theme = useSelector(state => state.themeReducer)
+	//effect
 	useEffect(() => {
 		const subcribe = window.addEventListener("resize", () => {
 			const wd = window.innerWidth;
@@ -33,20 +32,19 @@ const Home = () => {
 		});
 		return subcribe;
 	}, [isDisplay])
+	//return
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 1, delay: 0.5 }}
-			style={{ height: "70vh", border: "4px solid black" }}
 		>
-			<Wrap justify="center">
+			<Wrap justify="center" theme={theme}>
 				<Col span={24} lg={8} md={10} xxl={6}>
 					<Navbar />
 				</Col>
 				{ isDisplay ? (
 					<Col
-						id="background_message"
 						span={24}
 						lg={16}
 						md={14}

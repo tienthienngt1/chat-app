@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import author from "../../assets/author.gif";
+import { insertUser } from "../../api/insert";
 
 const Wrap = styled.div`
 	padding: 10px;
@@ -12,13 +13,20 @@ const Wrap = styled.div`
 
 const LoginButton = () => {
 	const history = useHistory();
-	const handleFbButton = () => {
+	const handleFbButton = async () => {
 		const fbProvider = new FacebookAuthProvider();
-		signInWithPopup(auth, fbProvider)
-			.then((res) => {
+		try{
+		  const res = await signInWithPopup(auth, fbProvider)
+		  console.log(res)
+		  const createdAt = res.user.metadata.createdAt *1
+		  const lastLoginAt = res.user.metadata.lastLoginAt *1
+			  if(lastLoginAt - createdAt <= 1000){
+			    await insertUser()
+			  }
 				return history.push("/home");
-			})
-			.catch((err) => alert("Error!"));
+			} catch(err){
+			alert("Error!")
+			}
 	};
 	return (
 		<>

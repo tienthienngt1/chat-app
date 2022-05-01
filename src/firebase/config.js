@@ -22,9 +22,10 @@ const db = getFirestore(app);
 (async () => {
     setPersistence(auth, browserLocalPersistence)
 }) ()
- connectAuthEmulator(auth, "http://localhost:9099");
- connectFirestoreEmulator(db, "localhost", "8080")
  getAnalytics(app)
  
+// connectAuthEmulator(auth, "http://localhost:9099");
+// connectFirestoreEmulator(db, "localhost", "8080")
+
 export {auth, db}
 export default firebase;

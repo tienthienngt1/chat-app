@@ -18,7 +18,7 @@ const Message = props => {
 				<>
 					<Col>
 						<Affix offsetTop>
-							<HeaderMessage {...currentRoom} {...props}  />
+							<HeaderMessage {...currentRoom} {...props}/>
 						</Affix>
 					</Col>
 					<Col>
