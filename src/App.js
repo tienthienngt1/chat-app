@@ -53,7 +53,7 @@ const Container = () => {
 function App() {
 	return (
 		<Provider store={store}>
-			<Router>
+			<Router basename={window.location.pathname || ''}>
 				<Switch>
 					<Container />
 				</Switch>
